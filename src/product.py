@@ -1,3 +1,5 @@
+from typing import Any
+
 class Product:
     def __init__(self, name, description, price, quantity):
         self.name = name
@@ -24,3 +26,17 @@ class Product:
             prod_dict["price"],
             prod_dict["quantity"]
         )
+
+    def __str__(self) -> str:
+        """
+        Возвращает строковое представление товара.
+        """
+        return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other: Any) -> float:
+        """
+        Складывает стоимость всех товаров на складе для двух объектов Product.
+        """
+        if not isinstance(other, Product):
+            return NotImplemented
+        return self.price * self.quantity + other.price * other.quantity

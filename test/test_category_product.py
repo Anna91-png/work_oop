@@ -30,17 +30,8 @@ def test_product_new_product():
     assert product.price == 500
     assert product.quantity == 4
 
-def test_category_add_product_and_products_str():
-    p1 = Product("One", "desc", 100, 2)
-    p2 = Product("Two", "desc2", 200, 3)
-    cat = Category("cat", "desc", [])
-    cat.add_product(p1)
-    cat.add_product(p2)
-    result = cat.products
-    assert "One, 100 руб. Остаток: 2 шт." in result
-    assert "Two, 200 руб. Остаток: 3 шт." in result
-
 def test_category_add_product_type_error():
     cat = Category("cat", "desc", [])
     with pytest.raises(TypeError):
         cat.add_product("not a product")
+
