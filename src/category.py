@@ -1,33 +1,38 @@
-from product import Product
+from typing import List
+from src.product import Product
+
 
 class Category:
     product_count = 0  # Класс-переменная для общего количества товаров
 
-    def __init__(self, name, description, products):
+    def __init__(self, name: str, description: str, products: List[Product] = None) -> None:
         self.name = name
         self.description = description
-        self.__products = []
-        for product in products:
-            self.add_product(product)
+        self._products = products if products is not None else []  # Используем временный атрибут
 
-    def add_product(self, product):
+    def add_product(self, product: Product) -> None:
         if not isinstance(product, Product):
-            raise TypeError("Можно добавить только объект класса Product")
-        self.__products.append(product)
-        Category.product_count += 1  # Работает, так как product_count — это переменная класса
+            raise TypeError("Only products can be added to the category")
+        self._products.append(product)
+        Category.product_count += 1  # Увеличиваем общее количество товаров
 
     @property
-    def products(self):
-        return self.__products  # Return the actual list of products
+    def products(self) -> List[Product]:
+        return self._products  # Возвращаем фактический список продуктов
+
+    @products.setter
+    def products(self, value: List[Product]) -> None:
+        if not isinstance(value, list):
+            raise TypeError("Products must be a list")
+        self._products = value
 
     @property
-    def total_product_count(self):
+    def total_product_count(self) -> int:
         return Category.product_count
 
     def __str__(self) -> str:
         """
         Возвращает строковое представление категории с общим количеством товаров.
         """
-        total_quantity = sum(product.quantity for product in self.__products)  # Use __products
+        total_quantity = sum(product.quantity for product in self._products)  # Используем _products
         return f"{self.name}, количество продуктов: {total_quantity} шт."
-
