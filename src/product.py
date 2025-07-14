@@ -1,11 +1,13 @@
 from typing import Any
 
 class Product:
+    product_count = 0
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
-        self.__price = price
+        self.price = price
         self.quantity = quantity
+        Product.product_count += 1
 
     @property
     def price(self):
@@ -33,10 +35,9 @@ class Product:
         """
         return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other: Any) -> float:
-        """
-        Складывает стоимость всех товаров на складе для двух объектов Product.
-        """
-        if not isinstance(other, Product):
-            return NotImplemented
-        return self.price * self.quantity + other.price * other.quantity
+    def __add__(self, other):
+        if type(self) is not type(other):
+            raise TypeError("Cannot add products of different types")
+        return self.price + other.price
+    def __repr__(self):
+        return f"{self.name} - {self.price} - {self.quantity}"
