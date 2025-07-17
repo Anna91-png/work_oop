@@ -1,24 +1,12 @@
-from typing import Any
+from src.BaseProduct import BaseProduct
+from src.InfoMixin import InfoMixin
 
-class Product:
+class Product(InfoMixin, BaseProduct):
     product_count = 0
+
     def __init__(self, name, description, price, quantity):
-        self.name = name
-        self.description = description
-        self.price = price
-        self.quantity = quantity
+        super().__init__(name, description, price, quantity)
         Product.product_count += 1
-
-    @property
-    def price(self):
-        return self.__price
-
-    @price.setter
-    def price(self, value):
-        if value > 0:
-            self.__price = value
-        else:
-            print("Цена не должна быть нулевая или отрицательная")
 
     @classmethod
     def new_product(cls, prod_dict):
@@ -29,15 +17,16 @@ class Product:
             prod_dict["quantity"]
         )
 
+    def get_info(self) -> str:
+        return f"{self.name} - {self.description} ({self.price} руб., {self.quantity} шт.)"
+
     def __str__(self) -> str:
-        """
-        Возвращает строковое представление товара.
-        """
         return f"{self.name}, {int(self.price)} руб. Остаток: {self.quantity} шт."
+
+    def __repr__(self):
+        return f"Product('{self.name}', '{self.description}', {self.price}, {self.quantity})"
 
     def __add__(self, other):
         if type(self) is not type(other):
             raise TypeError("Cannot add products of different types")
         return self.price + other.price
-    def __repr__(self):
-        return f"{self.name} - {self.price} - {self.quantity}"
