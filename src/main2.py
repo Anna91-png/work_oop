@@ -1,7 +1,8 @@
-from product import Product
-from category import Category
+from src.product import Product
 from src.Smartphone import Smartphone
 from src.LawnGrass import LawnGrass
+from src.category import Category
+
 
 if __name__ == "__main__":
     # Создание продуктов (Product)
@@ -99,3 +100,9 @@ if __name__ == "__main__":
         print("Возникла ошибка TypeError при добавлении не продукта")
     else:
         print("Не возникла ошибка TypeError при добавлении не продукта")
+
+        if __name__ == "__main__":
+            s = Smartphone("Samsung", "Android phone", 1500.0, 3, 85.0, "S22", 128, "Silver")
+            g = LawnGrass("GreenMix", "Fast growing grass", 300.0, 10, "Germany", "Medium", "Spring")
+            print(s.get_info())
+            print(g.get_info())

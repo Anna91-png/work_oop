@@ -49,3 +49,13 @@ def test_lawngrass_initialization():
     assert grass.country == "Германия"
     assert grass.germination_period == "6 дней"
     assert grass.color == "темно-зеленый"
+
+    def test_smartphone_creation_prints_info(capfd):
+        phone = Smartphone("iPhone", "Apple phone", 1000.0, 5, 90.5, "15 Pro", 256, "Black")
+        captured = capfd.readouterr()
+        assert "Создан объект класса Smartphone" in captured.out
+
+    def test_lawngrass_creation_prints_info(capfd):
+        grass = LawnGrass("Greeny", "For summer", 500.0, 2, "Russia", "Fast", "Summer")
+        captured = capfd.readouterr()
+        assert "Создан объект класса LawnGrass" in captured.out
