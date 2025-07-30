@@ -22,3 +22,17 @@ def test_category_products_property():
     cat = Category("Cat", "desc", [p1])
     assert cat.products == [p1]
     assert str(cat.products[0]) == "A, 10 руб. Остаток: 2 шт."
+
+    def test_product_zero_quantity_raises_valueerror():
+        with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+            Product("Тест", "описание", 100, 0)
+
+    def test_middle_price_correct():
+        product1 = Product("Test1", "desc1", 100.0, 1)
+        product2 = Product("Test2", "desc2", 200.0, 2)
+        category = Category("Категория", "Описание", [product1, product2])
+        assert category.middle_price() == 150.0
+
+    def test_middle_price_empty_category():
+        category = Category("Пустая", "Без продуктов", [])
+        assert category.middle_price() == 0

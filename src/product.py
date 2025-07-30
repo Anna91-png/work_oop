@@ -5,13 +5,14 @@ from src.InfoMixin import InfoMixin
 class Product(InfoMixin, BaseProduct):
     product_count = 0
 
-    def __init__(self, name, description, price, quantity):
-        self._price = None
-        self.name = name
-        self.description = description
-        self.price = price  # работает через сеттер
-        self.quantity = quantity
-        Product.product_count += 1
+    class Product:
+        def __init__(self, name: str, description: str, price: float, quantity: int):
+            if quantity == 0:
+                raise ValueError("Товар с нулевым количеством не может быть добавлен")
+            self.name = name
+            self.description = description
+            self.price = price
+            self.quantity = quantity
 
     @property
     def price(self):
